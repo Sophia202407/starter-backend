@@ -17,13 +17,15 @@ A full-stack web application to manage library operations — built using **Spri
 - Password reset functionality
 
 ### 👥 Member Management
-- Add, edit, delete, and search members
-- View member details
+- Register new members with personal details (name, address, contact information, etc.)
+- Edit, delete members
+- Search for members by name or ID
 
 ### 📖 Book Management
 - Add, update, delete, view books
-- Book attributes: ISBN, title, author, category, year, copies
-- Search and filter functionality
+- Book attributes: ISBN, title, author, category, publicationvyear, copies available
+- Search and filter books by various criteria
+- Track book status (available, borrowed, reserved)
 
 ### 📦 Lending Management
 - Borrow and return books
@@ -36,17 +38,19 @@ A full-stack web application to manage library operations — built using **Spri
 | Layer        | Technology              |
 |--------------|--------------------------|
 | Frontend     | React, React Router, Axios, Bootstrap |
-| Backend      | Spring Boot, Spring Security, JPA (Hibernate) |
+| Backend      | Spring Boot, RESTful API, Spring Security, JPA (Hibernate) |
 | Database     | MySQL                    |
 | Auth         | JWT (JSON Web Tokens)    |
 | Version Ctrl | Git & GitHub             |
 
 ## 🔐 Business Rules
 
-- Max 3 books per member
+- Membership valid for 1 year from registration
+- Max 3 books per member at a time
 - Loan duration: 14 days, with max 2 renewals
-- Overdue fine: $0.50 per day, capped at $20
-- Borrowing is blocked if fines > $10 or books are overdue
+- Overdue fine: $0.50 per day, capped at $20 per book
+- Fine starts accumulating from day after due date
+- Borrowing is blocked if fines > $10 or if having any overdue books
 
 ## 🧪 Deliverables & Criteria
 
@@ -55,6 +59,12 @@ A full-stack web application to manage library operations — built using **Spri
 - Proper error handling and validation
 - Functional and tested UI/UX
 - Technical documentation included
+- No critical bugs
+
+## 🎯 Target Audience
+
+- Librarians: To efficiently manage library resources.
+- Members: To easily search for books and track their borrowing history
 
 ## 🚀 Getting Started (Development)
 
