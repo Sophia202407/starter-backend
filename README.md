@@ -1,74 +1,50 @@
-# 📚 Library Management System
+# 📚 Library Management System - Backend
 
-A full-stack web application to manage library operations — built using **Spring Boot**, **React**, and **MySQL**.
+Spring Boot REST API for library operations with JWT security and MySQL integration
 
-## 🎯 Project Goals
+## 🎯 Backend Responsibilities
+- RESTful API for frontend interactions
+- JWT Authentication & Authorization (Librarian/Member roles)
+- Business Logic Enforcement:
+  - Lending rules (max books, renewals, fines)
+  - Membership validity checks
+- Database Operations via Spring Data JPA
 
-- Enable librarians to manage books, members, and lending processes efficiently
-- Allow members to search books, reserve, and track their borrowing history
-- Apply lending rules, fine calculation, and reservation logic
+## 🚀 Tech Stack
+| Layer       | Technology               |
+|-------------|--------------------------|
+| Framework   | Spring Boot 3.x          |
+| Security    | Spring Security + JWT    |
+| Database    | MySQL 8                  |
+| ORM         | Hibernate/JPA            |
+| Build Tool  | Maven                    |
 
-## 🔑 Key Features
+## 📂 API Endpoints (Key Examples)
+### 🔐 Auth Controller
+- `POST /api/auth/register` → Register (Librarian/Member)
+- `POST /api/auth/login` → JWT Token generation
+- `POST /api/auth/reset-password` → Password reset
 
-### 👤 User Management
-- User registration and login (JWT)
-- Librarian and Member roles
-- Profile management
-- Password reset functionality
+### 📖 Book Controller
+- `GET /api/books?search={query}&status={available}` → Search/filter books
+- `POST /api/books` → Add new book (Librarian only)
+- `PUT /api/books/{id}/reserve` → Reserve book (Member)
 
-### 👥 Member Management
-- Register new members with personal details (name, address, contact information, etc.)
-- Edit, delete members
-- Search for members by name or ID
+### 📦 Lending Controller
+- `POST /api/loans/borrow` → Borrow book (with due date calc)
+- `POST /api/loans/return` → Return book (+ fine if overdue)
+- `GET /api/loans/member/{id}` → Member's borrowing history
 
-### 📖 Book Management
-- Add, update, delete, view books
-- Book attributes: ISBN, title, author, category, publicationvyear, copies available
-- Search and filter books by various criteria
-- Track book status (available, borrowed, reserved)
+## ⚙️ Setup & Configuration
+### 1. Database Setup
+```sql
+CREATE DATABASE lms_db;
 
-### 📦 Lending Management
-- Borrow and return books
-- View borrowing history
-- Reserve books
-- Due date tracking and automatic fine calculation
+### 2. Configure `application.properties`
 
-## ⚙️ Tech Stack
+### 3. Run the Backend in Eclipse
 
-| Layer        | Technology              |
-|--------------|--------------------------|
-| Frontend     | React, React Router, Axios, Bootstrap |
-| Backend      | Spring Boot, RESTful API, Spring Security, JPA (Hibernate) |
-| Database     | MySQL                    |
-| Auth         | JWT (JSON Web Tokens)    |
-| Version Ctrl | Git & GitHub             |
+Right-click your main application class (the one with @SpringBootApplication)
 
-## 🔐 Business Rules
+Select Run As → Spring Boot App
 
-- Membership valid for 1 year from registration
-- Max 3 books per member at a time
-- Loan duration: 14 days, with max 2 renewals
-- Overdue fine: $0.50 per day, capped at $20 per book
-- Fine starts accumulating from day after due date
-- Borrowing is blocked if fines > $10 or if having any overdue books
-
-## 🧪 Deliverables & Criteria
-
-- All core features implemented
-- JWT authentication & role-based access control
-- Proper error handling and validation
-- Functional and tested UI/UX
-- Technical documentation included
-- No critical bugs
-
-## 🎯 Target Audience
-
-- Librarians: To efficiently manage library resources.
-- Members: To easily search for books and track their borrowing history
-
-## 🚀 Getting Started (Development)
-
-### Backend
-```bash
-cd backend
-./mvnw spring-boot:run
