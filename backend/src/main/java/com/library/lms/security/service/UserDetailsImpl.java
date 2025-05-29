@@ -1,11 +1,12 @@
 package com.library.lms.security.service;
 
-import com.library.lms.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.library.lms.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -17,16 +18,33 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
     private String username;
     private String email;
+
     @JsonIgnore
     private String password;
+
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String address;
+    private LocalDate membershipDate;
+    private LocalDate membershipExpiryDate;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String username, String email, String password,
-            Collection<? extends GrantedAuthority> authorities) {
+                           String firstName, String lastName, String phoneNumber, String address,
+                           LocalDate membershipDate, LocalDate membershipExpiryDate,
+                           Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.membershipDate = membershipDate;
+        this.membershipExpiryDate = membershipExpiryDate;
         this.authorities = authorities;
     }
 
@@ -40,12 +58,14 @@ public class UserDetailsImpl implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities);
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhoneNumber(),
+                user.getAddress(),
+                user.getMembershipDate(),
+                user.getMembershipExpiryDate(),
+                authorities
+        );
     }
 
     public Long getId() {
@@ -54,6 +74,35 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public LocalDate getMembershipDate() {
+        return membershipDate;
+    }
+
+    public LocalDate getMembershipExpiryDate() {
+        return membershipExpiryDate;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
     @Override
@@ -90,7 +139,7 @@ public class UserDetailsImpl implements UserDetails {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof UserDetailsImpl))
             return false;
         UserDetailsImpl user = (UserDetailsImpl) o;
         return Objects.equals(id, user.id);
